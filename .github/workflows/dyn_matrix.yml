@@ -11,9 +11,10 @@ jobs:
       - uses: actions/checkout@v1
       - id: get-matrix-step
         run: |
-          pwd
-          ls -l ./
           ./get-matrix.sh
+          which jq
+          which python
+          which python3
   linux3:
     needs: get-matrix
     runs-on: ubuntu-20.04
@@ -24,5 +25,4 @@ jobs:
       - uses: actions/checkout@v1
       - name: IMPL testing
         run: |
-          ls -l ./
           echo "matrix.IMPL: ${{ matrix.IMPL }}"
