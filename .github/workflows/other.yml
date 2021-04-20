@@ -3,7 +3,7 @@ name: Build and Test (other)
 on: [push, pull_request]
 
 jobs:
-  linux:
+  linux2:
     runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
