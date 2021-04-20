@@ -14,17 +14,17 @@ jobs:
         run: ./get-matrix.py
       - name: show env
         run: set
-#  linux:
-#    needs: get-matrix
-#    runs-on: ubuntu-20.04
-#    strategy:
-#      fail-fast: false
-#      matrix: ${{ fromJson(needs.get-matrix.outputs.matrix-linux) }}
-#    steps:
-#      - uses: actions/checkout@v2
-#      - name: IMPL testing
-#        run: |
-#          echo "matrix.IMPL: ${{ matrix.IMPL }}"
+  linux:
+    needs: get-matrix
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.get-matrix.outputs.matrix-linux) }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: IMPL testing
+        run: |
+          echo "matrix.IMPL: ${{ matrix.IMPL }}"
   macos:
     needs: get-matrix
     runs-on: macos-10.15
