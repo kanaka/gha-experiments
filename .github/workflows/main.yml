@@ -10,10 +10,12 @@ jobs:
       matrix-osx: ${{ steps.get-matrix-step.outputs.osx }}
     steps:
       - uses: actions/checkout@v2
-      - uses: trilom/file-changes-action@v1.2.3
+      - uses: jitterbit/get-changed-files@v1
       - name: Show files
         run: |
-          cat $HOME/files.json
+          for changed_file in ${{ steps.files.outputs.all }}; do
+            echo "changed file: ${changed_file}."
+          done
       - id: get-matrix-step
         run: ./get-matrix.py
       - name: show env
