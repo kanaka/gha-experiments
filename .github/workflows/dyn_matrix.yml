@@ -14,7 +14,10 @@ jobs:
       matrix: ${{ steps.get-matrix-step.outputs.matrix }}
     steps:
       - id: get-matrix-step
-        run: ./get-matrix.sh
+        run: |
+          pwd
+          ls -l ./
+          ./get-matrix.sh
   linux3:
     needs: get-matrix
     runs-on: ubuntu-20.04
