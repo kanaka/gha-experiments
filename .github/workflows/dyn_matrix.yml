@@ -3,16 +3,13 @@ name: Dynamic matrix
 on: [push, pull_request]
 
 jobs:
-  checkout:
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v1
   get-matrix:
     needs: checkout
     runs-on: ubuntu-20.04
     outputs:
       matrix: ${{ steps.get-matrix-step.outputs.matrix }}
     steps:
+      - uses: actions/checkout@v1
       - id: get-matrix-step
         run: |
           pwd
@@ -25,6 +22,7 @@ jobs:
       fail-fast: false
       matrix: ${{fromJson(needs.get-matrix.outputs.matrix)}}
     steps:
+      - uses: actions/checkout@v1
       - name: IMPL testing
         run: |
           ls -l ./
