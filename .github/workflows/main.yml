@@ -11,6 +11,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: trilom/file-changes-action@v1.2.4
+      - name: Show files
+        run: |
+          cat $HOME/files.json
       - id: get-matrix-step
         run: ./get-matrix.py
       - name: show env
@@ -23,9 +26,6 @@ jobs:
       matrix: ${{ fromJson(needs.get-matrix.outputs.matrix-linux) }}
     steps:
       - uses: actions/checkout@v2
-      - name: Show files
-        run: |
-          cat $HOME/files.json
       - name: IMPL testing
         run: |
           echo "matrix.IMPL: ${{ matrix.IMPL }}"
@@ -37,9 +37,6 @@ jobs:
       matrix: ${{ fromJson(needs.get-matrix.outputs.matrix-osx) }}
     steps:
       - uses: actions/checkout@v2
-      - name: Show files
-        run: |
-          cat $HOME/files.json
       - name: IMPL testing
         run: |
           echo "matrix.IMPL: ${{ matrix.IMPL }}"
