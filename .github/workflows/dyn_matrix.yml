@@ -4,7 +4,6 @@ on: [push, pull_request]
 
 jobs:
   get-matrix:
-    needs: checkout
     runs-on: ubuntu-20.04
     outputs:
       matrix: ${{ steps.get-matrix-step.outputs.matrix }}
