@@ -10,7 +10,7 @@ jobs:
       matrix-osx: ${{ steps.get-matrix-step.outputs.osx }}
     steps:
       - uses: actions/checkout@v2
-      - uses: trilom/file-changes-action@v1.2.4
+      - uses: trilom/file-changes-action@v1.2.3
       - name: Show files
         run: |
           cat $HOME/files.json
