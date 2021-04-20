@@ -6,7 +6,8 @@ jobs:
   get-matrix:
     runs-on: ubuntu-20.04
     outputs:
-      matrix: ${{ steps.get-matrix-step.outputs.matrix }}
+      matrix-linux: ${{ steps.get-matrix-step.outputs.linux }}
+      matrix-osx: ${{ steps.get-matrix-step.outputs.osx }}
     steps:
       - uses: actions/checkout@v2
       - id: get-matrix-step
@@ -16,7 +17,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson(needs.get-matrix.outputs.matrix) }}
+      matrix: ${{ fromJson(needs.get-matrix.outputs.matrix-linux) }}
     steps:
       - uses: actions/checkout@v2
       - name: IMPL testing
@@ -27,7 +28,7 @@ jobs:
     runs-on: macos-10.15
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson(needs.get-matrix.outputs.matrix) }}
+      matrix: ${{ fromJson(needs.get-matrix.outputs.matrix-osx) }}
     steps:
       - uses: actions/checkout@v1
       - name: IMPL testing
