@@ -1,0 +1,24 @@
+name: Dynamic matrix
+
+on: [push, pull_request]
+
+jobs:
+  get_matrix:
+    runs-on: ubuntu-20.04
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - id: set-matrix
+        run: |
+          echo "::set-output name=matrix::{\"IMPL\":[\"IMPL=foo\", \"IMPL=bar basic_MODE=cbm NO_SELF_HOST=1\", \"IMPL=bar basic_MODE=qbasic NO_SELF_HOST=1\"]}"
+  linux:
+    needs: get_matrix
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix: ${{fromJson(needs.get_matrix.outputs.matrix)}}
+    steps:
+      - uses: actions/checkout@v1
+      - name: IMPL testing
+        run: |
+          echo "matrix.IMPL: ${{ matrix.IMPL }}"
