@@ -8,19 +8,25 @@ jobs:
     outputs:
       matrix: ${{ steps.get-matrix-step.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - id: get-matrix-step
-        run: |
-          ./get-matrix.sh
-          which jq
-          which python
-          which python3
+        run: ./get-matrix.sh
   linux3:
     needs: get-matrix
     runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
-      matrix: ${{fromJson(needs.get-matrix.outputs.matrix)}}
+      matrix: ${{ fromJson(needs.get-matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: IMPL testing
+        run: |
+          echo "matrix.IMPL: ${{ matrix.IMPL }}"
+  macos3:
+    runs-on: macos-10.15
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.get-matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v1
       - name: IMPL testing
