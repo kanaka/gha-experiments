@@ -1,6 +1,15 @@
 name: Dynamic matrix
 
-on: [push, pull_request]
+on:
+  push: {}
+  pull_request: {}
+  workflow_dispatch:
+    inputs:
+      impls:
+        description: 'Space separated list of impls to test (or all)'
+        required: true
+        default: 'all'
+
 
 jobs:
   get-matrix:
@@ -15,7 +24,10 @@ jobs:
       - id: files
         uses: kanaka/get-changed-files@v1
       - id: get-matrix-step
-        run: ./get-matrix.py ${{ steps.files.outputs.all }}
+        run: |
+          echo "inputs.impls: ${{ github.event.inputs.impls }}"
+          ./get-matrix.py ${{ steps.files.outputs.all }}
+
   linux:
     needs: get-matrix
     if: ${{ needs.get-matrix.outputs.do-linux == 'true' }}
@@ -28,6 +40,7 @@ jobs:
       - name: IMPL testing
         run: |
           echo "matrix.IMPL: ${{ matrix.IMPL }}"
+
   macos:
     needs: get-matrix
     if: ${{ needs.get-matrix.outputs.do-macos == 'true' }}
