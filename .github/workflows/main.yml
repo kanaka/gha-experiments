@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - id: files
-        uses: jitterbit/get-changed-files@v1
+        uses: kanaka/get-changed-files@v1
       - name: Show files
         run: |
           for changed_file in ${{ steps.files.outputs.all }}; do
