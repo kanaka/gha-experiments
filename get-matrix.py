@@ -45,5 +45,8 @@ for impl in all_impls['IMPL']:
         else:
             linux_impls.append(impl_text(impl))
 
+
 print("::set-output name=linux::{\"IMPL\":%s}" % json.dumps(linux_impls))
+print("::set-output name=do-linux::%s" % json.dumps(len(linux_impls)>0))
 print("::set-output name=macos::{\"IMPL\":%s}" % json.dumps(macos_impls))
+print("::set-output name=do-macos::%s" % json.dumps(len(macos_impls)>0))

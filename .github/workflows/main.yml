@@ -16,6 +16,7 @@ jobs:
         run: ./get-matrix.py ${{ steps.files.outputs.all }}
   linux:
     needs: get-matrix
+    if: ${{ needs.get-matrix.outputs.do-linux }}
     runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
@@ -27,6 +28,7 @@ jobs:
           echo "matrix.IMPL: ${{ matrix.IMPL }}"
   macos:
     needs: get-matrix
+    if: ${{ needs.get-matrix.outputs.do-macos }}
     runs-on: macos-10.15
     strategy:
       fail-fast: false
