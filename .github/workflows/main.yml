@@ -26,7 +26,8 @@ jobs:
         uses: kanaka/get-changed-files@v1
       - id: get-matrix-step
         run: |
-          echo "inputs.impls: ${{ github.event.inputs.impls }}"
+          export OVERRIDE_IMPLS=\"${{ github.event.inputs.impls }}\"
+          echo "OVERRIDE_IMPLS: ${OVERRIDE_IMPLS}"
           ./get-matrix.py ${{ steps.files.outputs.all }}
 
   linux:
