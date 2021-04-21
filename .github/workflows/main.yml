@@ -6,7 +6,9 @@ jobs:
   get-matrix:
     runs-on: ubuntu-20.04
     outputs:
+      do-linux: ${{ steps.get-matrix-step.outputs.do-linux }}
       matrix-linux: ${{ steps.get-matrix-step.outputs.linux }}
+      do-macos: ${{ steps.get-matrix-step.outputs.do-macos }}
       matrix-macos: ${{ steps.get-matrix-step.outputs.macos }}
     steps:
       - uses: actions/checkout@v2
