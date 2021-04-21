@@ -14,6 +14,16 @@ jobs:
         uses: kanaka/get-changed-files@v1
       - id: get-matrix-step
         run: ./get-matrix.py ${{ steps.files.outputs.all }}
+  debug:
+    needs: get-matrix
+    runs-on: ubuntu-20.04
+    steps:
+      - name: debug stuff
+        run: |
+          echo "do-linux: ${{ needs.get-matrix.outputs.do-linux }}"
+          echo "do-linux?: ${{ needs.get-matrix.outputs.do-linux == 'true' }}"
+          echo "do-macos: ${{ needs.get-matrix.outputs.do-linux }}"
+          echo "do-macos?: ${{ needs.get-matrix.outputs.do-linux == 'true' }}"
   linux:
     needs: get-matrix
     if: ${{ needs.get-matrix.outputs.do-linux == 'true' }}
