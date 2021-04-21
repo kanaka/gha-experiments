@@ -7,20 +7,13 @@ jobs:
     runs-on: ubuntu-20.04
     outputs:
       matrix-linux: ${{ steps.get-matrix-step.outputs.linux }}
-      matrix-osx: ${{ steps.get-matrix-step.outputs.osx }}
+      matrix-macos: ${{ steps.get-matrix-step.outputs.macos }}
     steps:
       - uses: actions/checkout@v2
       - id: files
         uses: kanaka/get-changed-files@v1
-      - name: Show files
-        run: |
-          for changed_file in ${{ steps.files.outputs.all }}; do
-            echo "changed file: ${changed_file}."
-          done
       - id: get-matrix-step
-        run: ./get-matrix.py
-      - name: show env
-        run: set
+        run: ./get-matrix.py ${{ steps.files.outputs.all }}
   linux:
     needs: get-matrix
     runs-on: ubuntu-20.04
@@ -37,7 +30,7 @@ jobs:
     runs-on: macos-10.15
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson(needs.get-matrix.outputs.matrix-osx) }}
+      matrix: ${{ fromJson(needs.get-matrix.outputs.matrix-macos) }}
     steps:
       - uses: actions/checkout@v2
       - name: IMPL testing
